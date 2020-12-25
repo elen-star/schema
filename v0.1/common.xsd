@@ -1,0 +1,25 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:simpleType name="name">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="^[A-Za-z0-9 ]+$"/>
+            <xsd:maxLength value="48"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="description">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="^[A-Za-z0-9.,;:\-\\\/+*\t\n^!@#$%'()\[\]\s&quot;&amp;_=]+$"/>
+            <xsd:maxLength value="496"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="nanoseconds">
+        <xsd:restriction base="xsd:int">
+            <xsd:maxInclusive value="999999999"/>
+            <xsd:minInclusive value="0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

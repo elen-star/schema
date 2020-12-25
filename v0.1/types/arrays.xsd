@@ -1,0 +1,130 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:main="http://github.com/elen-star/schema/main.xsd"
+            main:array="http://github.com/elen-star/schema/arrays.xsd"
+            targetNamespace="http://github.com/elen-star/schema/arrays.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="numerical.xsd"/>
+    <xsd:include schemaLocation="bool.xsd"/>
+
+    <xsd:complexType name="array:u8">
+        <xsd:sequence>
+            <xsd:element name="element" type="u8" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:u16">
+        <xsd:sequence>
+            <xsd:element name="element" type="u16" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:u32">
+        <xsd:sequence>
+            <xsd:element name="element" type="u32" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:u64">
+        <xsd:sequence>
+            <xsd:element name="element" type="u64" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:u128">
+        <xsd:sequence>
+            <xsd:element name="element" type="u128" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:n8[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="n8" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:n16[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="n16" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:n32[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="n32" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:n64[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="n64" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:n128[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="n128" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:i8[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="i8" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:i16[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="i16" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:i32[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="i32" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:i64[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="i64" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:i128[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="i128" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:f16[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="f16" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:f32[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="f32" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:f64[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="f64" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:f128[]>">
+        <xsd:sequence>
+            <xsd:element name="element" type="f128" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="array:bool[]">
+        <xsd:sequence>
+            <xsd:element name="element" type="bool" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

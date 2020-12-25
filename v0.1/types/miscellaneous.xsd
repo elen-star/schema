@@ -1,0 +1,93 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:d="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="numerical.xsd"/>
+    <xsd:include schemaLocation="bool.xsd"/>
+    <xsd:include schemaLocation="arrays.xsd"/>
+    <xsd:include schemaLocation="strings.xsd"/>
+
+    <xsd:simpleType name="primitives">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="u8"/>
+            <xsd:enumeration value="u16"/>
+            <xsd:enumeration value="u32"/>
+            <xsd:enumeration value="u64"/>
+            <xsd:enumeration value="u128"/>
+            <xsd:enumeration value="n8"/>
+            <xsd:enumeration value="n16"/>
+            <xsd:enumeration value="n32"/>
+            <xsd:enumeration value="n64"/>
+            <xsd:enumeration value="n128"/>
+            <xsd:enumeration value="i8"/>
+            <xsd:enumeration value="i16"/>
+            <xsd:enumeration value="i32"/>
+            <xsd:enumeration value="i64"/>
+            <xsd:enumeration value="i128"/>
+            <xsd:enumeration value="i8"/>
+            <xsd:enumeration value="i16"/>
+            <xsd:enumeration value="i32"/>
+            <xsd:enumeration value="i64"/>
+            <xsd:enumeration value="i128"/>
+            <xsd:enumeration value="f16"/>
+            <xsd:enumeration value="f32"/>
+            <xsd:enumeration value="f64"/>
+            <xsd:enumeration value="f128"/>
+            <xsd:enumeration value="bool"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="arrays">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="u8[]"/>
+            <xsd:enumeration value="u16[]"/>
+            <xsd:enumeration value="u32[]"/>
+            <xsd:enumeration value="u64[]"/>
+            <xsd:enumeration value="u128[]"/>
+            <xsd:enumeration value="n8[]"/>
+            <xsd:enumeration value="n16[]"/>
+            <xsd:enumeration value="n32[]"/>
+            <xsd:enumeration value="n64[]"/>
+            <xsd:enumeration value="n128[]"/>
+            <xsd:enumeration value="i8[]"/>
+            <xsd:enumeration value="i16[]"/>
+            <xsd:enumeration value="i32[]"/>
+            <xsd:enumeration value="i64[]"/>
+            <xsd:enumeration value="i128[]"/>
+            <xsd:enumeration value="f16[]"/>
+            <xsd:enumeration value="f32[]"/>
+            <xsd:enumeration value="f64[]"/>
+            <xsd:enumeration value="f128[]"/>
+            <xsd:enumeration value="bool[]"/>
+            <xsd:enumeration value="Object[]"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="strings">
+        <xsd:union memberTypes="AsciiString UTF8String"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="basicTypes">
+        <xsd:union memberTypes="primitives strings arrays"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="objectFieldName">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="^[a-z_]([_]?[A-Za-z0-9])*$"/>
+            <xsd:maxLength value="48"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ObjectField">
+        <xsd:sequence>
+            <xsd:element name="name" type="objectFieldName"/>
+            <xsd:element name="type" type="basicTypes"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Object">
+        <xsd:sequence>
+            <xsd:element name="field" type="ObjectField" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

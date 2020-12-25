@@ -1,0 +1,9 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:simpleType name="bool">
+        <xsd:restriction base="xsd:boolean"/>
+    </xsd:simpleType>
+
+</xsd:schema>

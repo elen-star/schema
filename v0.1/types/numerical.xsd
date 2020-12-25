@@ -1,0 +1,97 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:simpleType name="u8">
+        <xsd:restriction base="xsd:unsignedByte"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="u16">
+        <xsd:restriction base="xsd:unsignedShort"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="u32">
+        <xsd:restriction base="xsd:unsignedInt"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="u64">
+        <xsd:restriction base="xsd:unsignedLong"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="u128">
+        <xsd:restriction base="xsd:positiveInteger">
+            <xsd:maxInclusive value="340282366920938463463374607431768211455"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="i8">
+        <xsd:restriction base="xsd:byte"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="i16">
+        <xsd:restriction base="xsd:short"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="i32">
+        <xsd:restriction base="xsd:int"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="i64">
+        <xsd:restriction base="xsd:long"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="i128">
+        <xsd:restriction base="xsd:positiveInteger">
+            <xsd:minInclusive value="-170141183460469231731687303715884105728"/>
+            <xsd:maxInclusive value="170141183460469231731687303715884105727"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="n8">
+        <xsd:restriction base="xsd:unsignedByte">
+            <xsd:minInclusive value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="n16">
+        <xsd:restriction base="xsd:unsignedShort">
+            <xsd:minInclusive value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="n32">
+        <xsd:restriction base="xsd:unsignedInt">
+            <xsd:minInclusive value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="n64">
+        <xsd:restriction base="xsd:unsignedLong">
+            <xsd:minInclusive value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="n128">
+        <xsd:restriction base="xsd:positiveInteger">
+            <xsd:maxInclusive value="340282366920938463463374607431768211455"/>
+            <xsd:minInclusive value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="f16">
+        <xsd:restriction base="xsd:float"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="f32">
+        <xsd:restriction base="xsd:float"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="f64">
+        <xsd:restriction base="xsd:double"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="f128">
+        <xsd:restriction base="xsd:decimal"/>
+    </xsd:simpleType>
+
+</xsd:schema>

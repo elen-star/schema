@@ -1,0 +1,173 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:d="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="numerical.xsd"/>
+    <xsd:include schemaLocation="bool.xsd"/>
+    <xsd:include schemaLocation="arrays.xsd"/>
+    <xsd:include schemaLocation="strings.xsd"/>
+
+    <xsd:simpleType name="primitive">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="u8"/>
+            <xsd:enumeration value="u16"/>
+            <xsd:enumeration value="u32"/>
+            <xsd:enumeration value="u64"/>
+            <xsd:enumeration value="u128"/>
+            <xsd:enumeration value="n8"/>
+            <xsd:enumeration value="n16"/>
+            <xsd:enumeration value="n32"/>
+            <xsd:enumeration value="n64"/>
+            <xsd:enumeration value="n128"/>
+            <xsd:enumeration value="i8"/>
+            <xsd:enumeration value="i16"/>
+            <xsd:enumeration value="i32"/>
+            <xsd:enumeration value="i64"/>
+            <xsd:enumeration value="i128"/>
+            <xsd:enumeration value="i8"/>
+            <xsd:enumeration value="i16"/>
+            <xsd:enumeration value="i32"/>
+            <xsd:enumeration value="i64"/>
+            <xsd:enumeration value="i128"/>
+            <xsd:enumeration value="f16"/>
+            <xsd:enumeration value="f32"/>
+            <xsd:enumeration value="f64"/>
+            <xsd:enumeration value="f128"/>
+            <xsd:enumeration value="bool"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="array">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="u8[]"/>
+            <xsd:enumeration value="u16[]"/>
+            <xsd:enumeration value="u32[]"/>
+            <xsd:enumeration value="u64[]"/>
+            <xsd:enumeration value="u128[]"/>
+            <xsd:enumeration value="n8[]"/>
+            <xsd:enumeration value="n16[]"/>
+            <xsd:enumeration value="n32[]"/>
+            <xsd:enumeration value="n64[]"/>
+            <xsd:enumeration value="n128[]"/>
+            <xsd:enumeration value="i8[]"/>
+            <xsd:enumeration value="i16[]"/>
+            <xsd:enumeration value="i32[]"/>
+            <xsd:enumeration value="i64[]"/>
+            <xsd:enumeration value="i128[]"/>
+            <xsd:enumeration value="f16[]"/>
+            <xsd:enumeration value="f32[]"/>
+            <xsd:enumeration value="f64[]"/>
+            <xsd:enumeration value="f128[]"/>
+            <xsd:enumeration value="bool[]"/>
+            <xsd:enumeration value="Object[]"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="string">
+        <xsd:union memberTypes="AsciiString UTF8String"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="referenceType">
+        <xsd:union memberTypes="string array Object"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="name">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="^[a-z][_]?([A-Za-z0-9][_]?)*$"/>
+            <xsd:maxLength value="48"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="argument">
+        <xsd:choice>
+            <xsd:sequence>
+                <xsd:element name="name" type="name"/>
+                <xsd:element name="type" type="primitive"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="name" type="name"/>
+                <xsd:element name="type" type="referenceType"/>
+                <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="arguments">
+        <xsd:sequence>
+            <xsd:element name="argument" type="argument" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="void">
+        <xsd:sequence/>
+    </xsd:complexType>
+
+    <xsd:complexType name="result">
+        <xsd:choice>
+            <xsd:element name="type" type="primitive"/>
+            <xsd:sequence>
+                <xsd:element name="type" type="referenceType"/>
+                <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:element name="type" type="lambda"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="lambda">
+        <xsd:complexContent>
+            <xsd:extension base="methodSignature" />
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="methodSignature">
+        <xsd:sequence>
+            <xsd:element name="name" type="name"/>
+            <xsd:element name="arguments" type="arguments"/>
+            <xsd:element name="result" type="result"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="type">
+        <xsd:union memberTypes="primitive string array Object lambda"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="objectFieldName">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="^[a-z][_]?([A-Za-z0-9][_]?)*$"/>
+            <xsd:maxLength value="48"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="ownership">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="OWNED"/>
+            <xsd:enumeration value="BORROWED"/>
+            <xsd:enumeration value="BORROWED_MUTABLE"/>
+            <xsd:enumeration value="SHARED"/>
+            <xsd:enumeration value="SHARED_MUTABLE"/>
+            <xsd:enumeration value="SHARED_THREADSAFE"/>
+            <xsd:enumeration value="SHARED_THREADSAFE_MUTABLE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ObjectField">
+        <xsd:sequence>
+            <xsd:element name="name" type="objectFieldName"/>
+            <xsd:choice>
+                <xsd:element name="type" type="primitive"/>
+                <xsd:sequence>
+                    <xsd:element name="type" type="referenceType"/>
+                    <xsd:element name="ownership" type="ownership"/>
+                </xsd:sequence>
+                <xsd:element name="type" type="lambda"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Object">
+        <xsd:sequence>
+            <xsd:element name="field" type="ObjectField" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

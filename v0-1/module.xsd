@@ -1,0 +1,54 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://github.com/elen-star/schema/main.xsd"
+            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="types/types.xsd"/>
+    <xsd:include schemaLocation="common.xsd"/>
+
+    <xsd:complexType name="methodSignatures">
+        <xsd:sequence>
+            <xsd:element name="methodSignature" type="methodSignature"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="developer">
+        <xsd:restriction base="AsciiString">
+            <xsd:minLength value="0"/>
+            <xsd:maxLength value="56"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="dependency">
+        <xsd:sequence>
+            <xsd:element name="moduleName" type="name"/>
+            <xsd:element name="minSupportedVersion" type="u64"/>
+            <xsd:element name="maxSupportedVersion" type="u64" minOccurs="0"/>
+            <xsd:element name="developer" type="developer"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="dependencies">
+        <xsd:sequence>
+            <xsd:element name="dependency" type="dependency"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Module">
+        <xsd:sequence>
+            <xsd:element name="name"        type="name"/>
+            <xsd:element name="releaseDate" type="u64"/>
+            <xsd:element name="developer"   type="developer"/>
+            <xsd:element name="version"     type="u64"/>
+            <xsd:element name="description" type="description"/>
+            <xsd:element name="methodSignatures" type="methodSignatures"/>
+            <xsd:element name="dependencies" type="dependencies"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+
+    <xsd:element name="module" type="tns:Module"/>
+
+
+</xsd:schema>

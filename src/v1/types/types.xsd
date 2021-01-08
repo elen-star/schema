@@ -1,5 +1,5 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:d="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/elen-star/schema/src/v1/main.xsd"
             elementFormDefault="qualified">
 
     <xsd:include schemaLocation="numerical.xsd"/>
@@ -63,12 +63,18 @@
         </xsd:restriction>
     </xsd:simpleType>
 
+    <xsd:simpleType name="ObjectsArray">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Object[]"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
     <xsd:simpleType name="string">
         <xsd:union memberTypes="AsciiString UTF8String"/>
     </xsd:simpleType>
 
     <xsd:simpleType name="referenceType">
-        <xsd:union memberTypes="string array Object"/>
+        <xsd:union memberTypes="string array Object ObjectsArray"/>
     </xsd:simpleType>
 
     <xsd:simpleType name="name">
@@ -86,14 +92,121 @@
             </xsd:sequence>
             <xsd:sequence>
                 <xsd:element name="name" type="name"/>
-                <xsd:element name="type" type="referenceType"/>
+                <xsd:element name="type" type="string"/>
                 <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="name" type="name"/>
+                <xsd:element name="type" type="array"/>
+                <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="name" type="name"/>
+                <xsd:element name="type" type="Object"/>
+                <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="name" type="name"/>
+                <xsd:element name="type" type="ObjectsArray"/>
+                <xsd:element name="arrayOwnership" type="ownership"/>
+                <xsd:element name="elementsOwnership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="name" type="name"/>
+                <xsd:element name="type" type="lambdaTypeName"/>
+                <xsd:element name="signature" type="lambda"/>
             </xsd:sequence>
         </xsd:choice>
     </xsd:complexType>
 
+    <xsd:complexType name="moduleFactory" final="#all">
+        <xsd:sequence>
+            <!-- TODO: Describe consts properly -->
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="lambdaTypeName">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="lambda"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="environmentNameConst">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="environment"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="environmentLambdaArgumentKeyConst">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="key"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="environmentLambdaArgumentTypeConst">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="UTF8String"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="environmentLambdaArgumentKey">
+        <xsd:sequence>
+            <xsd:element name="name" type="environmentLambdaArgumentKeyConst"/>
+            <xsd:element name="type" type="environmentLambdaArgumentTypeConst"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="environmentLambdaArguments">
+        <xsd:sequence>
+            <xsd:element name="argument" type="environmentLambdaArgumentKey"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="environmentLambdaResultType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="UTF8String"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="environmentLambdaResultOwnership">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="OWNED"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="environmentLambdaResult">
+        <xsd:sequence>
+            <xsd:element name="type" type="environmentLambdaResultType"/>
+            <xsd:element name="ownership" type="environmentLambdaResultOwnership"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="environmentLambdaSignature">
+        <xsd:sequence>
+            <xsd:element name="arguments" type="environmentLambdaArguments"/>
+            <xsd:element name="result" type="environmentLambdaResult"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="environment" final="#all">
+        <xsd:sequence>
+            <xsd:element name="name" type="environmentNameConst"/>
+            <xsd:element name="type" type="lambdaTypeName"/>
+            <xsd:element name="signature" type="environmentLambdaSignature"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="context" final="#all">
+        <xsd:sequence>
+            <!-- TODO: Describe consts properly -->
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="arguments">
         <xsd:sequence>
+            <xsd:element name="moduleFactory" type="moduleFactory" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="environment" type="environment" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="context" type="context" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="argument" type="argument" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -104,19 +217,34 @@
 
     <xsd:complexType name="result">
         <xsd:choice>
+            <xsd:element name="type" type="void"/>
             <xsd:element name="type" type="primitive"/>
             <xsd:sequence>
-                <xsd:element name="type" type="referenceType"/>
+                <xsd:element name="type" type="string"/>
                 <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="type" type="array"/>
+                <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="type" type="Object"/>
+                <xsd:element name="ownership" type="ownership"/>
+            </xsd:sequence>
+            <xsd:sequence>
+                <xsd:element name="type" type="ObjectsArray"/>
+                <xsd:element name="arrayOwnership" type="ownership"/>
+                <xsd:element name="elementsOwnership" type="ownership"/>
             </xsd:sequence>
             <xsd:element name="type" type="lambda"/>
         </xsd:choice>
     </xsd:complexType>
 
     <xsd:complexType name="lambda">
-        <xsd:complexContent>
-            <xsd:extension base="methodSignature" />
-        </xsd:complexContent>
+        <xsd:sequence>
+            <xsd:element name="arguments" type="arguments"/>
+            <xsd:element name="result" type="result"/>
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="methodSignature">

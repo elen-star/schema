@@ -1,6 +1,6 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:tns="http://github.com/elen-star/schema/main.xsd"
-            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            xmlns:tns="http://github.com/elen-star/schema/src/v1/main.xsd"
+            targetNamespace="http://github.com/elen-star/schema/src/v1/main.xsd"
             elementFormDefault="qualified">
 
     <xsd:include schemaLocation="types/types.xsd"/>
@@ -34,6 +34,12 @@
         </xsd:sequence>
     </xsd:complexType>
 
+    <xsd:complexType name="installer">
+        <xsd:sequence>
+            <xsd:element name="moduleName" type="dependency" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="Module">
         <xsd:sequence>
             <xsd:element name="name"        type="name"/>
@@ -43,6 +49,7 @@
             <xsd:element name="description" type="description"/>
             <xsd:element name="methodSignatures" type="methodSignatures"/>
             <xsd:element name="dependencies" type="dependencies"/>
+            <xsd:element name="installer"   type="installer"/>
         </xsd:sequence>
     </xsd:complexType>
 

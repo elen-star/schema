@@ -1,5 +1,5 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            targetNamespace="http://github.com/elen-star/schema/src/v1/main.xsd"
             elementFormDefault="qualified">
 
     <xsd:simpleType name="description">

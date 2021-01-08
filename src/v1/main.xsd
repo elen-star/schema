@@ -1,6 +1,6 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:tns="http://github.com/elen-star/schema/main.xsd"
-            targetNamespace="http://github.com/elen-star/schema/main.xsd"
+            xmlns:tns="http://github.com/elen-star/schema/src/v1/main.xsd"
+            targetNamespace="http://github.com/elen-star/schema/src/v1/main.xsd"
             elementFormDefault="qualified">
 
     <xsd:include schemaLocation="common.xsd"/>
